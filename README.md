@@ -4,22 +4,32 @@
 
 > 1.Clone the repository:
 > git clone https://github.com/AlmedinNasufi/ic-project.git
+
 > 2.Navigate to the Project Directory:
 > cd path-to-your-project-directory
+
 > 3.Install dependencies:
 > composer install
-> 4.Set up Environment Variables:
+
+> 4.Set up Environment Variables
+
 > 5.Generate Application Key:
 > php artisan key:generate
+
 > 6.Generate JWT Key:
 > php artisan jwt:secret
+
 > 7.Migrate Data:
 > php artisan migrate
+
 > 8.Seed Database:
 > Populate the database with Roles, Books, and Categories:
+
 > php artisan db:seed
+
 > Register an Admin User:
 > You need to register a user manually as an Admin. After registration, set the role_id to 1 in the database to make them an Admin.
+
 > Register a User:
 > Similarly, register a regular user and set the role_id to 2 to give them standard user privileges.
 
