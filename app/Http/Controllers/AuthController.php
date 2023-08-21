@@ -16,7 +16,8 @@ class AuthController extends Controller
      * @return void
      */
     public function __construct() {
-        $this->middleware('auth:api', ['except' => ['login', 'register']]);
+        // $this->middleware('auth:api', ['except' => ['login', 'register']]);
+        $this->middleware('token.refresh', ['except' => ['login', 'register', 'refresh']]);
     }
     /**
      * Get a JWT via given credentials.
@@ -26,7 +27,7 @@ class AuthController extends Controller
     public function login(Request $request){
     	$validator = Validator::make($request->all(), [
             'email' => 'required|email',
-            'password' => 'required|string|min:6',
+            'password' => 'required|string|min:8',
         ]);
         if ($validator->fails()) {
             return response()->json($validator->errors(), 422);
