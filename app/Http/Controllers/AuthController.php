@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use Validator;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Validator;
 
 class AuthController extends Controller
 {
@@ -47,7 +47,10 @@ class AuthController extends Controller
             'name' => 'required|string|between:2,100',
             'email' => 'required|string|email|max:100|unique:users',
             'password' => 'required|string|confirmed|min:8',
+            'role_id' => 'exists:roles,id',
         ]);
+
+
         if($validator->fails()){
             return response()->json($validator->errors()->toJson(), 400);
         }

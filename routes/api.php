@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\RoleController;
 
 /*
 |--------------------------------------------------------------------------
@@ -25,4 +26,12 @@ Route::controller(AuthController::class)->middleware(['api'])->prefix('auth')->g
     Route::post('/refresh','refresh');
     Route::get('/user-profile','userProfile');
     Route::put('/change-password','changePassword');
+});
+
+Route::controller(RoleController::class)->middleware(['token.refresh'])->prefix('role')->group(function () {
+    Route::get("/", 'index')->name("role");
+    Route::post("/store", 'store')->name("role.store")->middleware(['IsAdmin']);
+    Route::get("/{id}", 'show')->name("role.show");
+    Route::put("/update/{id}", 'update')->name("role.update")->middleware(['IsAdmin']);
+    Route::delete("/delete/{id}", 'destroy')->name("role.delete")->middleware(['IsAdmin']);
 });
