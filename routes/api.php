@@ -3,7 +3,9 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\BookController;
 use App\Http\Controllers\RoleController;
+use App\Http\Controllers\UserController;
 use App\Http\Controllers\CategoryController;
 
 /*
@@ -44,6 +46,18 @@ Route::controller(CategoryController::class)->middleware(['token.refresh'])->pre
     Route::get("/{id}", 'show')->name("categories.show");
     Route::put("/update/{id}", 'update')->name("categories.update")->middleware(['IsAdmin']);
     Route::delete("/delete/{id}", 'destroy')->name("categories.delete")->middleware(['IsAdmin']);
-
-
 });
+
+
+Route::controller(BookController::class)->middleware(['token.refresh'])->prefix('book')->group(function () {
+    Route::get("/", 'index')->name("book");
+    Route::post("/store", 'store')->name("book.store")->middleware(['IsAdmin']);
+    Route::put("/update/{id}", 'update')->name("book.update")->middleware(['IsAdmin']);
+    Route::delete("/delete/{id}", 'destroy')->name("book.delete")->middleware(['IsAdmin']);
+    Route::get('/search', 'search')->name("book.search");
+    Route::get("/{id}", 'show')->name("book.show");
+});
+Route::controller(UserController::class)->middleware(['token.refresh'])->prefix('user')->group(function () {
+    Route::post("/profile/change/category", 'addOrEditCategoryPreferences')->name("user.profile.change");
+});
+
