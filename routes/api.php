@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\RoleController;
+use App\Http\Controllers\CategoryController;
 
 /*
 |--------------------------------------------------------------------------
@@ -34,4 +35,15 @@ Route::controller(RoleController::class)->middleware(['token.refresh'])->prefix(
     Route::get("/{id}", 'show')->name("role.show");
     Route::put("/update/{id}", 'update')->name("role.update")->middleware(['IsAdmin']);
     Route::delete("/delete/{id}", 'destroy')->name("role.delete")->middleware(['IsAdmin']);
+});
+
+
+Route::controller(CategoryController::class)->middleware(['token.refresh'])->prefix('category')->group(function () {
+    Route::get("/", 'index')->name("categories");
+    Route::post("/store", 'store')->name("categories.store")->middleware(['IsAdmin']);
+    Route::get("/{id}", 'show')->name("categories.show");
+    Route::put("/update/{id}", 'update')->name("categories.update")->middleware(['IsAdmin']);
+    Route::delete("/delete/{id}", 'destroy')->name("categories.delete")->middleware(['IsAdmin']);
+
+
 });
